@@ -13,46 +13,47 @@ import {
     FormMessage
 } from "@/components/ui/form";
 
-import {LoginSchema} from "@/schemas";
+import {RegisterSchema} from "@/schemas";
 import {Input} from "@/components/ui/input";
 
 import {CardWrapper} from "@/components/auth/card-wrapper";
 import {Button} from "@/components/ui/button";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
-import {login} from "@/actions/login";
+import {register} from "@/actions/register";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
             email: "",
             password: "",
+            name: "",
         },
     });
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError("");
         setSuccess("");
 
         startTransition(() => {
-            login(values)
+            register(values)
                 .then((data) => {
                     setError(data.error)
                     setSuccess(data.success)
-            });
+                });
         });
     };
 
     return (
         <CardWrapper
-            headerLabel="Bienvenido! Inicia sesión para continuar."
-            backButtonLabel="No tienes cuenta? Regístrate aquí."
-            backButtonHref="/auth/register"
+            headerLabel="Crea una cuenta ¡Ahora!"
+            backButtonLabel="Ya tienes cuenta? Inicia sesión aquí."
+            backButtonHref="/auth/login"
             showSocial
         >
             <Form {...form}>
@@ -61,6 +62,23 @@ export const LoginForm = () => {
                     className="space-y-5"
                 >
                     <div className="space-y-3">
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel> Nombre de Usuario </FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            disabled={isPending}
+                                            placeholder="Ingrese su nombre de Usuario"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="email"
@@ -72,7 +90,7 @@ export const LoginForm = () => {
                                             {...field}
                                             disabled={isPending}
                                             type="email"
-                                            placeholder="alguien@ejemplo.com"
+                                            placeholder="Ingresa un correo electrónico válido"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -90,7 +108,7 @@ export const LoginForm = () => {
                                             {...field}
                                             disabled={isPending}
                                             type="password"
-                                            placeholder="********"
+                                            placeholder="Crea una contraseña que recuerdes"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -105,7 +123,7 @@ export const LoginForm = () => {
                         type="submit"
                         className="w-full"
                     >
-                        Iniciar Sesión
+                        Crear Cuenta
                     </Button>
                 </form>
             </Form>
