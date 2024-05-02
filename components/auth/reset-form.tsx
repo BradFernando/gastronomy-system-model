@@ -2,10 +2,9 @@
 
 import * as z from "zod";
 import {useState, useTransition} from "react";
-import {useSearchParams} from "next/navigation";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import Link from "next/link";
+
 
 import {
     Form,
@@ -15,53 +14,47 @@ import {
     FormMessage
 } from "@/components/ui/form";
 
-import {LoginSchema} from "@/schemas";
+import {ResetSchema} from "@/schemas";
 import {Input} from "@/components/ui/input";
 
 import {CardWrapper} from "@/components/auth/card-wrapper";
 import {Button} from "@/components/ui/button";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
-import {login} from "@/actions/login";
+import {reset} from "@/actions/reset";
 
-export const LoginForm = () => {
-    const searchParams = useSearchParams();
-    const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
-        ? "Email en uso, prueba un proveedor diferente."
-        : "";
+export const ResetForm = () => {
 
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof ResetSchema>>({
+        resolver: zodResolver(ResetSchema),
         defaultValues: {
             email: "",
-            password: "",
         },
     });
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof ResetSchema>) => {
         setError("");
         setSuccess("");
 
         startTransition(() => {
-            login(values)
+            reset(values)
                 .then((data) => {
                     setError(data?.error)
                     // TODO: Haremos uso cuando se implemente 2FA
                     setSuccess(data?.success)
-            });
+                });
         });
     };
 
     return (
         <CardWrapper
-            headerLabel="Bienvenido! Inicia sesión para continuar."
-            backButtonLabel="No tienes cuenta? Regístrate aquí."
-            backButtonHref="/auth/register"
-            showSocial
+            headerLabel="Olvidaste tu contraseña?"
+            backButtonLabel="Regresar a Iniciar Sesión"
+            backButtonHref="/auth/login"
         >
             <Form {...form}>
                 <form
@@ -87,43 +80,15 @@ export const LoginForm = () => {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({field}) => (
-                                <FormItem>
-                                    <FormLabel> Contraseña </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            disabled={isPending}
-                                            placeholder="********"
-                                            type="password"
-                                        />
-                                    </FormControl>
-                                    <Button
-                                        size="sm"
-                                        variant="link"
-                                        asChild
-                                        className="px-0 font-normal text-sm text-gray-600"
-                                    >
-                                        <Link href="/auth/reset">
-                                            Olvidaste tu contraseña? Haz clic aquí.
-                                        </Link>
-                                    </Button>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
                     </div>
-                    <FormError message={error || urlError}/>
+                    <FormError message={error}/>
                     <FormSuccess message={success}/>
                     <Button
                         disabled={isPending}
                         type="submit"
                         className="w-full"
                     >
-                        Iniciar Sesión
+                        Enviar email de recuperación
                     </Button>
                 </form>
             </Form>
