@@ -2,6 +2,20 @@ import {Resend} from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+export const sendTwoFactorTokenEmail = async (
+    email: string,
+    token: string
+) => {
+    await resend.emails.send({
+        from: "onboarding@resend.dev",
+        to: email,
+        subject: "Código de verificación de dos pasos",
+        html: `<p>Tu código de verificación de dos pasos es: ${token}</p>`
+    });
+
+};
+
+
 export const sendPasswordResetEmail = async (
     email: string,
     token: string
@@ -15,6 +29,7 @@ export const sendPasswordResetEmail = async (
       html: `<p>Clickea <a href="${resetLink}">Aqui</a> para restablecer tu contraseña </p>`
     });
 };
+
 
 export const sendVerificationEmail = async (
     email: string,
