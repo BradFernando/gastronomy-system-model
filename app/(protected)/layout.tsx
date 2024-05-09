@@ -1,8 +1,9 @@
 import {Navbar} from "@/app/(protected)/_components/navbar";
+import React from "react";
 
 interface ProtectedLayoutProps {
     children: React.ReactNode;
-};
+}
 
 const ProtectedLayout = ({children}: ProtectedLayoutProps) => {
     return (
