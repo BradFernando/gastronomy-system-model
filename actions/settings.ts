@@ -8,7 +8,7 @@ import {SettingsSchema} from "@/schemas";
 import {getUserByEmail, getUserById} from "@/data/user";
 import {currentUser} from "@/lib/auth";
 import {generateVerificationToken} from "@/lib/tokens";
-import {sendVerificationEmail} from "@/lib/mail";
+import {sendVerificationEmail} from "@/lib/nodemail";
 import {unstable_update} from "@/auth";
 
 export const settings = async (
@@ -34,7 +34,6 @@ export const settings = async (
         values.email = undefined;
         values.password = undefined;
         values.newPassword = undefined;
-        values.isTwoFactorEnabled = undefined;
     }
 
     if (values.email && values.email !== user.email) {

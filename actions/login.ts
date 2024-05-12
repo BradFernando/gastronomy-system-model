@@ -9,7 +9,7 @@ import {signIn} from "@/auth";
 import {getUserByEmail} from "@/data/user";
 import {getTwoFactorTokenByEmail} from "@/data/two-factor-token";
 import {generateVerificationToken, generateTwoFactorToken} from "@/lib/tokens";
-import {sendVerificationEmail, sendTwoFactorTokenEmail} from "@/lib/mail";
+import {sendVerificationEmail, sendTwoFactorTokenEmail} from "@/lib/nodemail";
 import {getTwoFactorConfirmationByUserId} from "@/data/two-factor-confirmation";
 
 
