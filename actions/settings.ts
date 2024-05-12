@@ -9,7 +9,7 @@ import {getUserByEmail, getUserById} from "@/data/user";
 import {currentUser} from "@/lib/auth";
 import {generateVerificationToken} from "@/lib/tokens";
 import {sendVerificationEmail} from "@/lib/mail";
-import {update} from "@/auth";
+import {unstable_update} from "@/auth";
 
 export const settings = async (
     values: z.infer<typeof SettingsSchema>
@@ -78,8 +78,8 @@ export const settings = async (
         }
     });
 
-    update({
-        user:{
+    await unstable_update({
+        user: {
             name: updatedUser.name,
             email: updatedUser.email,
             isTwoFactorEnabled: updatedUser.isTwoFactorEnabled,
