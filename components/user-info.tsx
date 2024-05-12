@@ -59,7 +59,7 @@ export const UserInfo = ({
                 rounded-lg border p-3 shadow-sm
                 ">
                     <p className="text-sm font-medium">
-                        Autenticación de dos factores:
+                        Autenticación en dos pasos:
                     </p>
                     <Badge
                         variant={user?.isTwoFactorEnabled ? 'success' : 'destructive'}
