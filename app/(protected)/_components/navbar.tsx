@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
@@ -11,11 +11,12 @@ export const Navbar = () => {
 
     return (
         <nav className="bg-secondary flex justify-between
-        items-center p-4 rounded-xl w-[600px] shadow-sm">
+        items-center p-4 rounded-xl w-full sm:w-[600px] shadow-sm">
             <div className="flex gap-x-2">
                 <Button
                     asChild
                     variant={pathname === "/server" ? "default" : "outline" }
+                    className="text-xs sm:text-base"
                 >
                     <Link href="/server">
                         Servidor
@@ -24,6 +25,7 @@ export const Navbar = () => {
                 <Button
                     asChild
                     variant={pathname === "/client" ? "default" : "outline" }
+                    className="text-xs sm:text-base"
                 >
                     <Link href="/client">
                         Cliente
@@ -32,6 +34,7 @@ export const Navbar = () => {
                 <Button
                     asChild
                     variant={pathname === "/admin" ? "default" : "outline" }
+                    className="text-xs sm:text-base"
                 >
                     <Link href="/admin">
                         Administrador
@@ -40,6 +43,7 @@ export const Navbar = () => {
                 <Button
                     asChild
                     variant={pathname === "/settings" ? "default" : "outline" }
+                    className="text-xs sm:text-base"
                 >
                     <Link href="/settings">
                         Ajustes
