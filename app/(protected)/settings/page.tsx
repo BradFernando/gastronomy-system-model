@@ -56,7 +56,6 @@ const SettingsPage = () => {
         }
     });
 
-
     const onSubmit = (values:z.infer<typeof SettingsSchema>) => {
         startTransition(() => {
             settings(values)
@@ -72,6 +71,10 @@ const SettingsPage = () => {
             })
                 .catch(() => setError("Algo salio mal :("))
         });
+    }
+
+    const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+        event.target.scrollIntoView({behavior: 'smooth', block: 'center'});
     }
 
     return (
@@ -101,6 +104,7 @@ const SettingsPage = () => {
                                             {...field}
                                             placeholder="Nuevo Nombre"
                                             disabled={isPending}
+                                            onFocus={handleFocus}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -123,6 +127,7 @@ const SettingsPage = () => {
                                                       placeholder="alguien@example.com"
                                                       type="email"
                                                       disabled={isPending}
+                                                      onFocus={handleFocus}
                                                   />
                                               </FormControl>
                                               <FormMessage />
@@ -141,8 +146,9 @@ const SettingsPage = () => {
                                                   <Input
                                                       {...field}
                                                       placeholder="********"
-                                                        type="password"
+                                                      type="password"
                                                       disabled={isPending}
+                                                      onFocus={handleFocus}
                                                   />
                                               </FormControl>
                                               <FormMessage />
@@ -163,6 +169,7 @@ const SettingsPage = () => {
                                                       placeholder="Escriba una clave nueva"
                                                       type="password"
                                                       disabled={isPending}
+                                                      onFocus={handleFocus}
                                                   />
                                               </FormControl>
                                               <FormMessage />
