@@ -11,8 +11,8 @@ export const Navbar = () => {
 
     return (
         <nav className="bg-secondary flex justify-between
-        items-center p-4 rounded-xl w-full sm:w-[600px] shadow-sm">
-            <div className="flex gap-x-2">
+        items-center p-2 sm:p-4 rounded-xl w-full shadow-sm">
+            <div className="flex gap-1 sm:gap-x-2">
                 <Button
                     asChild
                     variant={pathname === "/server" ? "default" : "outline" }
