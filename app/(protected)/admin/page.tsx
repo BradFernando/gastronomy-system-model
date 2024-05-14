@@ -36,7 +36,7 @@ const AdminPage =  () => {
 
 
     return (
-        <Card className="w-[600px]">
+        <Card>
             <CardHeader>
                 <p className="text-1xl font-semibold text-center">
                     🔑 Administrador
